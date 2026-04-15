@@ -89,6 +89,10 @@ export abstract class BasePage {
         return this.page.locator(selector);
     }
 
+    async waitForNetworkIdle(timeoutMs?: number): Promise<void> {
+        await this.page.waitForLoadState('networkidle', timeoutMs ? { timeout: timeoutMs } : undefined);
+    }
+
     async executeScript(script: string, ...args: any[]): Promise<any> {
         this.logger.info('Execute script');
         const result = await this.page.evaluate(script, ...args);
